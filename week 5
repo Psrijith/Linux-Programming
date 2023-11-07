@@ -1,0 +1,53 @@
+ 
+**Write a C Program that makes a copy of a file using standard I/O and system calls.**
+
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h> 
+
+void main()
+{
+	char buf;
+	int fd_one, fd_two;
+
+	fd_one = open("file1", O_RDONLY);
+
+	if (fd_one == -1)
+	{
+		printf("Error opening first_file\n");
+		close(fd_one);
+		return;
+	}
+
+	fd_two = open("file2", 
+				  O_WRONLY | O_CREAT,
+				  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	
+	while(read(fd_one, &buf, 1))
+	{
+		write(fd_two, &buf, 1);
+	}
+
+	printf("Successful copy");
+
+	close(fd_one);
+	close(fd_two);
+}
+
+//save it as .c , compile as ./filename file1 file2
+
+**count file lines ,char ,words 
+
+awk '{
+	c+=length;
+	w+=NF;
+	l++;
+}
+END{
+	print "no of char : "c;
+	print "no of words : "w;
+	print "no of lines : "l;
+}' 1.txt
+
+// comple : bash filename.sh
+
